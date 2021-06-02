@@ -1,7 +1,8 @@
 {
   "parser": "babel-eslint",
-  "extends": [ "prettier", "prettier/react"],
+  "extends": ["prettier"],
   "rules": {
+    "react/jsx-filename-extension": [1, { "allow": "as-needed" }],
     "no-extra-semi": "error",
     "semi": ["error", "never"],
     "spaced-comment": 0,
@@ -19,14 +20,7 @@
     "no-param-reassign": ["error", { "props": false }],
     "radix": "off",
     "react/jsx-props-no-spreading": "off",
-    // "indent": [2, 2, { "SwitchCase": 1 }],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".js", ".jsx"]
-      }
-    ],
     "prettier/prettier": [
       "error",
       {
