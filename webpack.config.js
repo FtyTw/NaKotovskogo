@@ -1,6 +1,6 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin') //installed via npm
-const webpack = require('webpack') //to access built-in plugins
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
@@ -33,12 +33,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
-          // name(file) {
-          //  console.log(file)
-          //  return file.match('about') ? 'about/[name].[ext]' : '[name].[ext]'
-          // }
           esModule: false
-          // outputPath: '/src/assets/images'
         }
       },
       {
@@ -50,20 +45,11 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     https: true,
-    // https: {
-    //   key: fs.readFileSync('server.key'),
-    //   cert: fs.readFileSync('server.crt')
-    //   // ca: fs.readFileSync('/path/to/ca.pem'),
-    // },
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
     }
-    //  {
-    //  disableDotRule: true,
-    //  index: paths.publicUrlOrPath
-    // }
   },
   plugins: [
     new webpack.ProgressPlugin(),
