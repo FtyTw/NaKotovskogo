@@ -7,6 +7,7 @@ const MainSpinner = ({ hideSpinner }) => {
   const size = window.innerWidth
   const [opacity, setOpacity] = useState(1)
   const [intervalValue, setIntervalValue] = useState()
+  const [degreesInterval, setDegreesInterval] = useState()
   const [degrees, setDegrees] = useState(0)
   const spinnerRef = useRef()
   const rotateDiv = (deg) => {
@@ -22,6 +23,7 @@ const MainSpinner = ({ hideSpinner }) => {
       setOpacity((prevOpacity) => {
         if (prevOpacity <= 0) {
           clearInterval(opacityInterval)
+          clearInterval(degreesInterval)
 
           return
         }
@@ -35,11 +37,9 @@ const MainSpinner = ({ hideSpinner }) => {
     let degrees = 0
     const interval = setInterval(() => {
       degrees = (degrees + 10) % 360
-      // console.log('degrees', degrees)
       rotateDiv(degrees)
-    }, 50)
-
-    return () => clearInterval(interval)
+    }, 10)
+    setDegreesInterval(interval)
   }, [])
 
   useEffect(() => {

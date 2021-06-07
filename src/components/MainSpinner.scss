@@ -2,8 +2,8 @@
 
 .main-spinner {
 	background-color: #fff;
-	position: absolute;
-	z-index: 10000;
+	position: fixed;
+	z-index: 10002;
 	width: 100%;
 	height: 100%;
 	display: flex;
