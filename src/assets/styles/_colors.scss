@@ -1,1 +1,5 @@
 $base-green: #50c3c2;
+
+@function base-green-rgba($opacity) {
+	@return rgba(80, 195, 194, $opacity);
+}

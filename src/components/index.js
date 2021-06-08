@@ -4,6 +4,8 @@ import Icon from './Icon'
 import AboutUsCard from './AboutUsCard'
 import TransitionComponent from './TransitionComponent'
 import MainSpinner from './MainSpinner'
+import InstaImage from './InstaImage'
+import InstaMessagesContainer from './InstaMessagesContainer'
 
 export {
   //
@@ -12,5 +14,7 @@ export {
   Icon,
   AboutUsCard,
   TransitionComponent,
-  MainSpinner
+  MainSpinner,
+  InstaImage,
+  InstaMessagesContainer
 }

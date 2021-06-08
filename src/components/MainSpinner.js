@@ -37,7 +37,11 @@ const MainSpinner = ({ hideSpinner }) => {
     let degrees = 0
     const interval = setInterval(() => {
       degrees = (degrees + 10) % 360
-      rotateDiv(degrees)
+      try {
+        rotateDiv(degrees)
+      } catch (error) {
+        clearInterval(interval)
+      }
     }, 10)
     setDegreesInterval(interval)
   }, [])

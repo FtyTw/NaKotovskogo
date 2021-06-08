@@ -18,6 +18,34 @@
 			overflow-y: hidden;
 		}
 	}
+
+	& .carousel-control-prev,
+	.carousel-control-next {
+		opacity: 1;
+	}
+
+	& .carousel-control-prev-icon,
+	.carousel-control-next-icon {
+		background-image: none;
+		&:after {
+			font-size: 55px;
+			color: $base-green;
+		}
+	}
+
+	& .carousel-control-next-icon:after {
+		content: '\276F';
+	}
+
+	& .carousel-control-prev-icon:after {
+		content: '\276E';
+	}
+
+	& .carousel-indicators li {
+		background-color: $base-green;
+		height: 5px;
+	}
+
 	& .animated-posts {
 		display: flex;
 		padding-top: 15px;
@@ -37,9 +65,5 @@
 				z-index: 10000;
 			}
 		}
-	}
-
-	& .about-instagram-image {
-		transition: opacity 1s, background-image 1s;
 	}
 }

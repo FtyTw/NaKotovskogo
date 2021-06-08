@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { images } from '../assets/images/about'
 
 // const images = []
@@ -30,4 +30,11 @@ export const useImageSource = (source) => {
   }, [source])
 
   return imgSrc
+}
+
+export const useDeviceDimensions = () => {
+  // iPad|iPod|
+  const isMobile = useMemo(() => /Android|webOS|iPhone|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent), [navigator.userAgent])
+
+  return isMobile
 }

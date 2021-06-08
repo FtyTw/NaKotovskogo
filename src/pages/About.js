@@ -3,94 +3,14 @@ import { Nav, Container, Row, Col, Fade, Collapse, Card, CardColumns, CardDeck, 
 
 import './About.scss'
 import { CategoriesText } from '../constants/CategoriesText'
-import { AboutUsCard, TransitionComponent, Icon } from '../components'
+import { AboutUsCard, TransitionComponent, Icon, InstaMessagesContainer } from '../components'
 import { getInstagramData, getInstagramMedia } from '../services/instagram'
+import { useDeviceDimensions } from '../hooks'
 
 const getComputedStyles = (ref) => window.getComputedStyle(ref.current)
 
-const InstaImage = ({ media_url, permalink, caption = '' }) => {
-  const [url, setUrl] = useState(false)
-  const [src, setSrc] = useState(false)
-  const [text, setText] = useState('')
-
-  useEffect(() => {
-    if (media_url) {
-      const image = new Image()
-      image.src = media_url
-      image.onload = () => {
-        setUrl(media_url)
-        setTimeout(() => {
-          setSrc(media_url)
-        }, 1000)
-      }
-    }
-  }, [media_url])
-
-  return (
-    <div
-      onClick={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        window.open(permalink, '_blank')
-      }}
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#F5F5F5',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        backgroundImage: `url(${src})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        cursor: 'pointer'
-      }}
-      className="shadow"
-    >
-      {!media_url && (
-        <Icon
-          //
-          prefix="fab"
-          icon="instagram"
-          size={'5x'}
-          defaultColor="#C0C0C0"
-          className="about-instagram-image"
-          tintColor="#C0C0C0"
-          style={{
-            opacity: +!url
-          }}
-        />
-      )}
-    </div>
-  )
-}
-const InstaMessagesContainer = ({ posts, index }) => {
-  return (
-    <div
-      key={`instamessages-${index}`}
-      style={{
-        //
-        width: '100%',
-        flexDirection: 'row',
-        display: 'flex',
-        justifyContent: 'space-between'
-      }}
-    >
-      {posts.map((i, index) => {
-        const { id, media_url, caption, permalink } = i
-
-        return (
-          <div style={{ width: '32%', height: '100%' }} key={`${media_url}-${index}`}>
-            <InstaImage media_url={media_url} permalink={permalink} caption={caption} />
-          </div>
-        )
-      })}
-    </div>
-  )
-}
 const About = () => {
+  const isMobile = useDeviceDimensions()
   const myCarousel = useRef()
   const [instaPosts, setInstaposts] = useState([
     [1, 2, 3],
@@ -135,7 +55,7 @@ const About = () => {
 
         return accumulator
       }, [])
-      setInstaposts(posts)
+      setInstaposts(isMobile ? posts.flat() : posts)
     }, handleError)
     // }, handleError)
   }, [])
@@ -143,13 +63,13 @@ const About = () => {
   return (
     <Container className="about">
       <Row>
-        <Col md="12 mt-5">
+        <Col md="12" className="mt-5">
           <Carousel slide={true} interval={1000000} controls style={{ width: '100%' }}>
             {instaPosts.map((posts, index) => {
               return (
                 <Carousel.Item key={`posts-${index * 100}`} style={{ height: 400 }}>
                   <div className="d-flex flex-row h-100 justify-content-between">
-                    <InstaMessagesContainer posts={posts} index={index} />
+                    <InstaMessagesContainer posts={posts} index={index} isMobile={isMobile} />
                   </div>
                 </Carousel.Item>
               )
