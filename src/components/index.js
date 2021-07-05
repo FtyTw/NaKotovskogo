@@ -6,6 +6,8 @@ import TransitionComponent from './TransitionComponent'
 import MainSpinner from './MainSpinner'
 import InstaImage from './InstaImage'
 import InstaMessagesContainer from './InstaMessagesContainer'
+import ContactForm from './ContactForm'
+import DirectionContainer from './DirectionContainer'
 
 export {
   //
@@ -16,5 +18,7 @@ export {
   TransitionComponent,
   MainSpinner,
   InstaImage,
-  InstaMessagesContainer
+  InstaMessagesContainer,
+  ContactForm,
+  DirectionContainer
 }

@@ -1,8 +1,12 @@
 {
   "parser": "babel-eslint",
-  "extends": ["prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
   "rules": {
-    "react/jsx-filename-extension": [1, { "allow": "as-needed" }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-extra-semi": "error",
     "semi": ["error", "never"],
     "spaced-comment": 0,
@@ -27,6 +31,10 @@
         "endOfLine": "auto"
       }
     ]
+  },
+  "env": {
+    "browser": true,
+    "node": true,
   },
   "plugins": ["prettier"]
 }

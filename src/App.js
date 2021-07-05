@@ -5,7 +5,7 @@ import { ErrorHandler } from './services'
 import { getInstagramMedia, refreshToken } from './services/instagram'
 import { AppContext } from './contexts'
 import { Header, BottomBar, MainSpinner } from './components'
-import { About } from './pages'
+import { About, Directions } from './pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/styles/style.scss'
@@ -62,6 +62,7 @@ const App = () => {
             <Redirect to="/about" />
           </Route>
           <Route path="/about" component={About} />
+          <Route path="/directions" component={Directions} />
         </Switch>
         <BottomBar />
       </Router>
