@@ -1,3 +1,4 @@
 import About from './About'
 import Directions from './Directions'
-export { About, Directions }
+import MasterClass from './MasterClass'
+export { About, Directions, MasterClass }

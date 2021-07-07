@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRouteMatch, Switch, Redirect, Route } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap'
-import './Directions.scss'
 
 import { DirectionContainer } from '../components'
 

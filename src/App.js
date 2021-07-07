@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import { ErrorHandler } from './services'
-import { getInstagramMedia, refreshToken } from './services/instagram'
+import {
+  getInstagramMedia
+  // refreshToken
+} from './services/instagram'
 import { AppContext } from './contexts'
 import { Header, BottomBar, MainSpinner } from './components'
-import { About, Directions } from './pages'
+import { About, Directions, MasterClass } from './pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/styles/style.scss'
@@ -52,7 +55,7 @@ const App = () => {
   }, [isReady])
 
   return (
-    <AppContext.Provider style={{ backgroundColor: 'green' }} value={{ instaData, masterClasses }}>
+    <AppContext.Provider style={{ backgroundColor: 'green' }} value={{ instaData, masterClasses, isReady }}>
       <MainSpinner hideSpinner={isReady} />
 
       <Router>
@@ -63,6 +66,7 @@ const App = () => {
           </Route>
           <Route path="/about" component={About} />
           <Route path="/directions" component={Directions} />
+          <Route path="/masterclass" component={MasterClass} />
         </Switch>
         <BottomBar />
       </Router>

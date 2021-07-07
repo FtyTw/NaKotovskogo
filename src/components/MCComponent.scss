@@ -1,0 +1,45 @@
+@import 'src/assets/styles/_colors.scss';
+
+.mc-main-row {
+	border: 1px solid $base-green;
+	margin: 0 5px 0 5px !important;
+	border-radius: 20px;
+	margin-bottom: 30px;
+	.mc-image-section {
+		position: relative;
+		height: 400px;
+		align-items: center;
+		justify-content: center;
+		display: flex;
+		.blurred {
+			width: 90%;
+			height: 90%;
+			position: absolute;
+			filter: blur(5px);
+			background-position: center;
+			background-size: cover;
+		}
+		.mc-image {
+			position: relative;
+			max-width: 90%;
+			max-height: 90%;
+			z-index: 1;
+		}
+	}
+
+	.mc-points {
+		display: flex;
+		align-items: center;
+		.mc-splitter {
+			height: 90%;
+			width: 1px;
+			background: $base-green;
+		}
+		.text {
+			font-size: 24px;
+			height: 90%;
+
+			width: 100%;
+		}
+	}
+}

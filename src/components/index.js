@@ -8,7 +8,7 @@ import InstaImage from './InstaImage'
 import InstaMessagesContainer from './InstaMessagesContainer'
 import ContactForm from './ContactForm'
 import DirectionContainer from './DirectionContainer'
-
+import MCComponent from './MCComponent'
 export {
   //
   Header,
@@ -20,5 +20,6 @@ export {
   InstaImage,
   InstaMessagesContainer,
   ContactForm,
-  DirectionContainer
+  DirectionContainer,
+  MCComponent
 }
