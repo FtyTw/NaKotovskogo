@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Row, Col } from 'react-bootstrap'
-import { ContactForm } from '../components'
+import { ContactForm, Blurred } from '../components'
 import './MCComponent.scss'
 
 const MCComponent = ({ item }) => {
@@ -15,12 +15,7 @@ const MCComponent = ({ item }) => {
   return (
     <Row className="mc-main-row mb-3">
       <Col md="6" className="mc-image-section p-0">
-        <div
-          className="blurred"
-          style={{
-            backgroundImage: `url(${media_url})`
-          }}
-        ></div>
+        <Blurred url={media_url} />
         <img className="mc-image" src={media_url} />
       </Col>
       <Col md="6" className="mc-points">

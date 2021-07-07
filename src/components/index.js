@@ -9,6 +9,7 @@ import InstaMessagesContainer from './InstaMessagesContainer'
 import ContactForm from './ContactForm'
 import DirectionContainer from './DirectionContainer'
 import MCComponent from './MCComponent'
+import Blurred from './Blurred'
 export {
   //
   Header,
@@ -21,5 +22,6 @@ export {
   InstaMessagesContainer,
   ContactForm,
   DirectionContainer,
-  MCComponent
+  MCComponent,
+  Blurred
 }

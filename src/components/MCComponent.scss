@@ -11,14 +11,7 @@
 		align-items: center;
 		justify-content: center;
 		display: flex;
-		.blurred {
-			width: 90%;
-			height: 90%;
-			position: absolute;
-			filter: blur(5px);
-			background-position: center;
-			background-size: cover;
-		}
+
 		.mc-image {
 			position: relative;
 			max-width: 90%;

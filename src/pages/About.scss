@@ -1,10 +1,10 @@
 @import 'src/assets/styles/_colors.scss';
+@import 'src/assets/styles/_fonts.scss';
 
 .about {
 	& .about-us-main-text {
-		font-size: 40px;
+		font-size: 4vh;
 		text-align: center;
-		font-family: 'Open Sans';
 	}
 
 	& [class^='transition-component'] {
@@ -21,6 +21,7 @@
 
 	& .carousel-control-prev,
 	.carousel-control-next {
+		z-index: 3;
 		opacity: 1;
 	}
 
