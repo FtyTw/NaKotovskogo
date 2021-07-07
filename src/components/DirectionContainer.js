@@ -44,16 +44,7 @@ const DirectionContainer = () => {
   const smallCategoriesRef = useRef()
   const { pathname } = useLocation()
   const prettifiedPath = useMemo(() => pathname && pathname.replace('/directions/', ''), [pathname])
-  const { scrollHeight, scrollWidth, maxScroll } = useMemo(() => {
-    if (!smallCategoriesRef || !smallCategoriesRef.current) {
-      return { scrollHeight: 0, scrollWidth: 0, maxScroll: 0 }
-    }
-    const { children } = smallCategoriesRef.current
-    const scrollHeight = parseInt(window.getComputedStyle(children[0], null).getPropertyValue('height'))
-    const scrollWidth = parseInt(window.getComputedStyle(children[0], null).getPropertyValue('width'))
 
-    return { scrollHeight, scrollWidth, maxScroll: children.length }
-  }, [smallCategoriesRef.current])
   const isMobile = useDeviceDimensions()
   const data = useTemplateData(prettifiedPath)
   const imageSource = useImageSource(prettifiedPath)
@@ -64,7 +55,7 @@ const DirectionContainer = () => {
     return
   }
 
-  const scrollToPosition = (negative) => {
+  const scrollToPosition = (negative, { scrollHeight, scrollWidth, maxScroll }) => {
     const param = isMobile ? 'scrollLeft' : 'scrollTop'
     const scrollValue = smallCategoriesRef.current[param]
     const scrollTo = isMobile ? scrollWidth : scrollHeight
@@ -82,16 +73,25 @@ const DirectionContainer = () => {
   }
 
   const onButtonClick = (arg) => {
+    const { children } = smallCategoriesRef.current
+    const scrollHeight = parseInt(window.getComputedStyle(children[0], null).getPropertyValue('height'))
+    const scrollWidth = parseInt(window.getComputedStyle(children[0], null).getPropertyValue('width'))
+    const maxScroll = children.length
+    const sizes = {
+      scrollHeight,
+      scrollWidth,
+      maxScroll
+    }
     try {
       const { scrollTop, scrollLeft } = smallCategoriesRef.current
 
       const params = isMobile ? [scrollLeft, scrollWidth] : [scrollTop, scrollHeight]
       const [from] = params
       if (arg === 'down') {
-        scrollToPosition(1)
+        scrollToPosition(1, sizes)
       }
       if (arg === 'up' && from > 0) {
-        scrollToPosition(-1)
+        scrollToPosition(-1, sizes)
       }
     } catch (error) {
       console.log(error)
