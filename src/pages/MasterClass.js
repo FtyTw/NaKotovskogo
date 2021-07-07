@@ -77,6 +77,7 @@ const MasterClass = () => {
                 {
                   title,
                   eventData: item,
+                  disabled: day < today,
                   points: [
                     title,
                     //

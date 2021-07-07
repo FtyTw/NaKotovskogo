@@ -8,7 +8,8 @@ const MCComponent = ({ item }) => {
   const {
     title,
     eventData: { media_url },
-    points
+    points,
+    disabled
   } = item
 
   return (
@@ -39,7 +40,7 @@ const MCComponent = ({ item }) => {
       </Col>
 
       <Col md="6" className="ml-md-auto mt-5">
-        <ContactForm handleSubmit={() => console.log('handleSubmit')} />
+        <ContactForm disabled={disabled} handleSubmit={() => console.log('handleSubmit')} />
       </Col>
     </Row>
   )

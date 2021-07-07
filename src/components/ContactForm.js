@@ -12,7 +12,7 @@ const initialState = {
 
 const reducer = (state, { type, payload } = {}) => (!!type ? { ...state, [type]: payload } : initialState)
 
-const ContactForm = ({ handleSubmit }) => {
+const ContactForm = ({ handleSubmit, disabled = false }) => {
   const [validated] = useState(false)
   const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -51,6 +51,7 @@ const ContactForm = ({ handleSubmit }) => {
           name="name"
           type="text"
           placeholder="Имя *"
+          disabled={disabled}
         />
 
         <Form.Control.Feedback type="invalid">
@@ -66,19 +67,29 @@ const ContactForm = ({ handleSubmit }) => {
           type="text"
           name="phone"
           placeholder="Телефон *"
+          disabled={disabled}
         />
         <Form.Control.Feedback type="invalid">
           <strong>{!state.phone ? 'Телефонный номер не может быть пустым' : 'Телефонный номер должен состоять из цифр'}</strong>
         </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="directions-form">
-        <Form.Control onChange={onChange} value={state.email} as="textarea" name="email" placeholder="E-mail" rows={3} />
+        <Form.Control
+          disabled={disabled}
+          onChange={onChange}
+          value={state.email}
+          as="textarea"
+          name="email"
+          placeholder="E-mail"
+          rows={3}
+        />
         <Button
           //
           className="d-block ml-auto mr-auto"
           style={{ marginTop: 20 }}
           variant="outline-info"
           type="submit"
+          disabled={disabled}
         >
           Запись
         </Button>
