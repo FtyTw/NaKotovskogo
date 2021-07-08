@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Component } from 'react'
-import { Nav, Container, Row, Col, Image, Fade, Collapse, Card, CardColumns, CardDeck, CardGroup, Carousel } from 'react-bootstrap'
+import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 import Icon from './Icon'
-import NavItem from './NavItem'
-import HeaderItems from '../constants/HeaderItems'
+// import NavItem from './NavItem'
+// import HeaderItems from '../constants/HeaderItems'
 import './BottomBar.scss'
 
 const GoogleFrame = () => {
@@ -17,7 +17,7 @@ const GoogleFrame = () => {
   )
 }
 
-const BottomBar = (props) => {
+const BottomBar = () => {
   const socialIcons = ['instagram', 'facebook', 'viber', 'telegram']
   const contacts = ['+38(068) 792 99 08 ', '+38(066) 665 36 01 ']
   const socialLinks = {
@@ -30,50 +30,38 @@ const BottomBar = (props) => {
   const handleSocialClick = (icon) => window.open(`${socialLinks[icon]}`, '_blank')
 
   return (
-    <Container className="footer pt-5 pt-md-0" fluid>
-      <Container>
-        <Row>
-          <Col md="4" className=" social-icons-section align-items-center ">
-            <div>
-              <div>
-                {socialIcons.map((icon) => (
-                  <Icon
-                    //
-                    key={icon}
-                    style={{ marginLeft: 10 }}
-                    onClick={() => handleSocialClick(icon)}
-                    defaultColor="#fff"
-                    icon={icon}
-                    size={'2x'}
-                  />
-                ))}
-              </div>
-              <div>Copyright Арт Студия на Котовского, 2018</div>
-            </div>
-          </Col>
-
-          <Col md="4" className="contacts align-items-start align-items-md-center mt-5 mt-md-0">
-            <div>Контакты:</div>
-            {contacts.map((contact, index) => (
-              <div key={contact + index}>{contact}</div>
+    <Container className="footer" fluid>
+      <Row>
+        <Col lg="4" xs="12" className="d-flex flex-column social-icons-section justify-content-center ">
+          <div className="icons  justify-content-center  aling-items-center  ">
+            {socialIcons.map((icon) => (
+              <Icon
+                //
+                key={icon}
+                style={{ marginLeft: 10 }}
+                onClick={() => handleSocialClick(icon)}
+                defaultColor="#fff"
+                icon={icon}
+                size={'2x'}
+              />
             ))}
-            <div className="address w-100 text-start text-md-center ">
-              ЖК "Острова", Марсельская, 40 <br />
-              {/*(нажми, чтоб открыть карту)*/}
-            </div>
-          </Col>
-          <Col md="4" className="google-map m-0 p-0">
-            <GoogleFrame />
-          </Col>
-          {/*<Col md="4" className="links align-items-start align-items-md-start mt-5 mt-md-0 mb-5 mb-md-0">
-            <div>
-              {HeaderItems.map(({ title, route }) => (
-                <NavItem key={title} title={title} route={route} />
-              ))}
-            </div>
-          </Col>*/}
-        </Row>
-      </Container>
+          </div>
+          <div className="copyright d-flex justify-content-center ">Copyright Арт Студия на Котовского, 2018</div>
+        </Col>
+        <Col lg="4" xs="12" className="contacts-section d-flex flex-column justify-content-center aling-items-center">
+          <div>Контакты:</div>
+          {contacts.map((contact, index) => (
+            <div key={contact + index}>{contact}</div>
+          ))}
+          <div>
+            ЖК &quot;Острова&quot;,&nbsp;Марсельская, 40 <br />
+            {/*(нажми, чтоб открыть карту)*/}
+          </div>
+        </Col>
+        <Col lg="4" xs="12" className="google-map d-flex justify-content-center ">
+          <GoogleFrame />
+        </Col>
+      </Row>
     </Container>
   )
 }
