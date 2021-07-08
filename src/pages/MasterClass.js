@@ -126,15 +126,18 @@ const MasterClass = () => {
           })}
         <Col
           md="12"
-          className=" pb-3 pb-md-0 justify-content-center"
+          className=" pb-3 pb-md-0 justify-content-md-center justify-content-start"
           style={{
             //
             marginTop: 50,
-            maxWidth: '100%',
+            maxWidth: '95%',
             display: 'flex',
             flexWrap: `${isMobile ? 'no' : ''}wrap`,
             cursor: 'pointer',
-            overflowX: isMobile ? 'scroll' : 'auto'
+            overflowX: isMobile ? 'scroll' : 'auto',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginBottom: 20
           }}
         >
           {masterClasses &&
