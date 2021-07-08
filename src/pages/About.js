@@ -12,11 +12,15 @@ const getComputedStyles = (ref) => window.getComputedStyle(ref.current)
 const About = () => {
   const isMobile = useDeviceDimensions()
   const myCarousel = useRef()
-  const [instaPosts, setInstaposts] = useState([
-    [1, 2, 3],
-    [1, 2, 3],
-    [1, 2, 3]
-  ])
+  const [instaPosts, setInstaposts] = useState(
+    !isMobile
+      ? [
+          [1, 2, 3],
+          [1, 2, 3],
+          [1, 2, 3]
+        ]
+      : [1, 2, 3]
+  )
   const [scrollValue, setScrollValue] = useState(0)
   const colors = ['lightblue', 'red', 'green', 'blue', 'yellow', 'purple']
   const loadMorePosts = () => {
