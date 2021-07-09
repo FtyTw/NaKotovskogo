@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react'
+import React, { useRef, useState, useEffect, useMemo, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Col } from 'react-bootstrap'
 import ContactForm from './ContactForm'
@@ -6,6 +6,8 @@ import Icon from './Icon'
 import SmallCategories from './SmallCategories'
 import { useImageSource, useDeviceDimensions } from '../hooks'
 import { CategoriesText } from '../constants/CategoriesText'
+import { sendEmail } from '../services/mail'
+import { AppContext } from '../contexts'
 import './DirectionContainer.scss'
 
 const useTemplateData = (type) => {
@@ -44,17 +46,14 @@ const DirectionContainer = () => {
   const smallCategoriesRef = useRef()
   const { pathname } = useLocation()
   const prettifiedPath = useMemo(() => pathname && pathname.replace('/directions/', ''), [pathname])
-
+  const { setToast } = useContext(AppContext)
   const isMobile = useDeviceDimensions()
   const data = useTemplateData(prettifiedPath)
   const imageSource = useImageSource(prettifiedPath)
-  const handleSubmit = (e, data, title) => {
-    e.preventDefault()
-    console.log(data, title)
 
-    return
+  const toastCallback = () => {
+    setToast('Запрос отправлен, ожидайте звонка от нашего администратора :)')
   }
-
   const scrollToPosition = (negative, { scrollHeight, scrollWidth, maxScroll }) => {
     const param = isMobile ? 'scrollLeft' : 'scrollTop'
     const scrollValue = smallCategoriesRef.current[param]
@@ -182,7 +181,7 @@ const DirectionContainer = () => {
             marginTop: 40
           }}
         >
-          <ContactForm handleSubmit={(e, user) => handleSubmit(e, user, data.title)} />
+          <ContactForm handleSubmit={(e, user) => sendEmail(e, user, data.title, toastCallback)} />
         </Col>
       </>
     )

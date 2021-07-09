@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-
 import { ErrorHandler } from './services'
 import {
   getInstagramMedia
   // refreshToken
 } from './services/instagram'
+import { initMailClient } from './services/mail.js'
 import { AppContext } from './contexts'
-import { Header, BottomBar, MainSpinner } from './components'
+import { Header, BottomBar, MainSpinner, ToastContainer } from './components'
 import { About, Directions, MasterClass } from './pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -23,7 +23,10 @@ const App = () => {
   const [instaData, setInstaData] = useState()
   const [masterClasses, setMasterClasses] = useState()
   const [isReady, setIsReady] = useState(false)
-
+  const [toast, setToast] = useState(false)
+  const onClose = () => {
+    setToast(false)
+  }
   const overflowHandling = (val) => {
     const html = document.documentElement
     html.style.overflow = val ? 'visible' : 'hidden'
@@ -46,7 +49,10 @@ const App = () => {
     }
   }
 
-  useEffect(handleInstaMedia, [])
+  useEffect(() => {
+    initMailClient()
+    handleInstaMedia()
+  }, [])
 
   useEffect(() => {
     if (isReady) {
@@ -55,9 +61,9 @@ const App = () => {
   }, [isReady])
 
   return (
-    <AppContext.Provider style={{ backgroundColor: 'green' }} value={{ instaData, masterClasses, isReady }}>
+    <AppContext.Provider style={{ backgroundColor: 'green' }} value={{ instaData, masterClasses, isReady, setToast }}>
       <MainSpinner hideSpinner={isReady} />
-
+      <ToastContainer toast={toast} onClose={onClose} />
       <Router>
         <Header />
         <Switch>

@@ -10,6 +10,7 @@ import ContactForm from './ContactForm'
 import DirectionContainer from './DirectionContainer'
 import MCComponent from './MCComponent'
 import Blurred from './Blurred'
+import ToastContainer from './ToastContainer'
 export {
   //
   Header,
@@ -23,5 +24,6 @@ export {
   ContactForm,
   DirectionContainer,
   MCComponent,
-  Blurred
+  Blurred,
+  ToastContainer
 }

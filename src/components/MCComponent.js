@@ -1,7 +1,8 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import { ContactForm, Blurred } from '../components'
+import { sendEmail } from '../services/mail'
+import { AppContext } from '../contexts'
 import './MCComponent.scss'
 
 const MCComponent = ({ item }) => {
@@ -11,6 +12,12 @@ const MCComponent = ({ item }) => {
     points,
     disabled
   } = item
+
+  const { setToast } = useContext(AppContext)
+
+  const toastCallback = () => {
+    setToast('Запрос отправлен, ожидайте звонка от нашего администратора :)')
+  }
 
   return (
     <Row className="mc-main-row mb-3">
@@ -35,7 +42,7 @@ const MCComponent = ({ item }) => {
       </Col>
 
       <Col md="6" className="ml-md-auto mt-5">
-        <ContactForm disabled={disabled} handleSubmit={() => console.log('handleSubmit')} />
+        <ContactForm disabled={disabled} handleSubmit={(e, data) => sendEmail(e, data, title, toastCallback)} />
       </Col>
     </Row>
   )
