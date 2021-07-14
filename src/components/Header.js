@@ -54,7 +54,7 @@ const Header = () => {
         </Col>
         <Col ref={navRef} style={fixed ? headerOnScrollStyles : null}>
           <Navbar collapseOnSelect expanded={expanded} expand="lg" className="p-0">
-            <Navbar.Brand className="d-md-none header-brand-style ">
+            <Navbar.Brand className="d-md-none header-brand-style  d-flex justify-content-space-between w-100 mr-0">
               <span onClick={onBrandNameClick} className="brand-name">
                 {' '}
                 Арт-студия Котовского
