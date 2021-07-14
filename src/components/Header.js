@@ -1,21 +1,23 @@
-import React, { useState, useEffect, Component, useRef, useLayoutEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useState, useRef, useLayoutEffect } from 'react'
+import { NavLink, useHistory } from 'react-router-dom'
 import { Nav, Container, Row, Col, Image, Navbar } from 'react-bootstrap'
 import NavItem from './NavItem'
 import HeaderItems from '../constants/HeaderItems'
 import logo from '../assets/images/logo.jpg'
 import './Header.scss'
 
-const Header = (props) => {
+const Header = () => {
+  const history = useHistory()
+  const [expanded, setExpanded] = useState(false)
+
   const navRef = useRef(null)
   const imageRef = useRef(null)
   const [fixed, setFixed] = useState(false)
-  const [headerTop, setHeaderTop] = useState(0)
   const [viewPadding, setViewPadding] = useState(0)
-  const onScroll = (evt) => {
+  const onScroll = () => {
     const { height } = window.getComputedStyle(imageRef.current)
-    setHeaderTop(parseInt(height))
     setFixed(window.scrollY >= parseInt(height))
+    setExpanded(false)
   }
   const onLoadSetPadding = () => {
     const { height } = window.getComputedStyle(navRef.current)
@@ -26,6 +28,11 @@ const Header = (props) => {
     zIndex: 10001,
     backgroundColor: '#ffffff',
     opacity: 0.9
+  }
+  const onBrandNameClick = (e) => {
+    e.stopPropagation()
+    setExpanded(false)
+    history.push('/about')
   }
 
   useLayoutEffect(() => {
@@ -46,15 +53,26 @@ const Header = (props) => {
           </Col>
         </Col>
         <Col ref={navRef} style={fixed ? headerOnScrollStyles : null}>
-          <Navbar expand="lg">
-            <Navbar.Brand href="/about" className="d-md-none header-brand-style">
-              Арт-студия Котовского
+          <Navbar collapseOnSelect expanded={expanded} expand="lg" className="p-0">
+            <Navbar.Brand className="d-md-none header-brand-style ">
+              <span onClick={onBrandNameClick} className="brand-name">
+                {' '}
+                Арт-студия Котовского
+              </span>
+              <Navbar.Toggle onClick={() => setExpanded((expanded) => !expanded)} aria-controls="basic-navbar-nav" className="ml-auto" />
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" className="ml-auto" />
             <Navbar.Collapse id="basic-navbar-nav " className="justify-content-center">
               <Nav>
                 {HeaderItems.map(({ title, route }) => (
-                  <NavItem upper key={title} title={title} route={route} />
+                  <NavItem
+                    upper
+                    key={title}
+                    title={title}
+                    route={route}
+                    onRedirect={() => {
+                      setExpanded(false)
+                    }}
+                  />
                 ))}
               </Nav>
             </Navbar.Collapse>
