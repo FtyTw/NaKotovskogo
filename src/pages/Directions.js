@@ -10,7 +10,7 @@ const Directions = () => {
   return (
     path && (
       <Container className="mt-5 pl-4 pr-4">
-        <Row>
+        <Row className="d-flex justify-content-center">
           <Switch>
             <Route exact path={path}>
               <Redirect to={`directions/calligraphy`} />

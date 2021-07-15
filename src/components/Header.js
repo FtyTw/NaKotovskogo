@@ -20,8 +20,11 @@ const Header = () => {
     setExpanded(false)
   }
   const onLoadSetPadding = () => {
+    //to do check the padding value
     const { height } = window.getComputedStyle(navRef.current)
-    setViewPadding(parseInt(height))
+
+    const parsedHeight = parseInt(height)
+    setViewPadding(isNaN(parsedHeight) ? 0 : parsedHeight)
   }
   const headerOnScrollStyles = {
     position: 'fixed',
@@ -54,7 +57,7 @@ const Header = () => {
         </Col>
         <Col ref={navRef} style={fixed ? headerOnScrollStyles : null}>
           <Navbar collapseOnSelect expanded={expanded} expand="lg" className="p-0">
-            <Navbar.Brand className="d-md-none header-brand-style  d-flex justify-content-space-between w-100 mr-0">
+            <Navbar.Brand className="d-lg-none header-brand-style  d-flex justify-content-space-between w-100 mr-0">
               <span onClick={onBrandNameClick} className="brand-name">
                 {' '}
                 Арт-студия Котовского

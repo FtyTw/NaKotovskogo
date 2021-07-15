@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useMemo, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Col } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import ContactForm from './ContactForm'
 import Icon from './Icon'
 import SmallCategories from './SmallCategories'
@@ -22,13 +22,12 @@ const useTemplateData = (type) => {
   return data
 }
 
-const ControlButton = ({ onButtonClick, direction, isMobile }) => {
+const ControlButton = ({ onButtonClick, direction }) => {
   return (
-    <Col
+    <div
       //
       className="small-categories-section-buttons"
       onClick={() => onButtonClick(direction)}
-      style={{ transform: `rotate(${isMobile ? 270 : 0}deg)` }}
     >
       <Icon
         //
@@ -38,7 +37,7 @@ const ControlButton = ({ onButtonClick, direction, isMobile }) => {
         defaultColor="#50c3c2"
         tintColor="#D3D3D3"
       />
-    </Col>
+    </div>
   )
 }
 
@@ -54,44 +53,38 @@ const DirectionContainer = () => {
   const toastCallback = () => {
     setToast('Запрос отправлен, ожидайте звонка от нашего администратора :)')
   }
-  const scrollToPosition = (negative, { scrollHeight, scrollWidth, maxScroll }) => {
+  const scrollToPosition = (negative, { scrollHeight, scrollWidth, correction }) => {
     const param = isMobile ? 'scrollLeft' : 'scrollTop'
-    const scrollValue = smallCategoriesRef.current[param]
     const scrollTo = isMobile ? scrollWidth : scrollHeight
-    const scrollToValue = scrollTo * negative
-    const finalValue = scrollValue + scrollToValue
-    const step = (scrollTo / 10) * negative
-    const maxScrollValue = scrollTo * maxScroll - scrollTo
-
+    const step = ((scrollTo + correction) / 10) * negative
+    let counter = 0
     const interval = setInterval(() => {
-      if (finalValue === smallCategoriesRef.current[param] || finalValue > maxScrollValue) {
+      counter++
+      if (counter > 10) {
         clearInterval(interval)
+
+        return
       }
       smallCategoriesRef.current[param] = smallCategoriesRef.current[param] + step
     }, 30)
   }
 
   const onButtonClick = (arg) => {
+    const { width, height } = window.getComputedStyle(smallCategoriesRef.current)
     const { children } = smallCategoriesRef.current
-    const scrollHeight = parseInt(window.getComputedStyle(children[0], null).getPropertyValue('height'))
-    const scrollWidth = parseInt(window.getComputedStyle(children[0], null).getPropertyValue('width'))
-    const maxScroll = children.length
+    const { marginBottom } = window.getComputedStyle(children[0])
+    const correction = parseInt(marginBottom, 10)
+
+    const scrollHeight = parseInt(height, 10)
+    const scrollWidth = parseInt(width, 10)
     const sizes = {
       scrollHeight,
       scrollWidth,
-      maxScroll
+      correction
     }
-    try {
-      const { scrollTop, scrollLeft } = smallCategoriesRef.current
 
-      const params = isMobile ? [scrollLeft, scrollWidth] : [scrollTop, scrollHeight]
-      const [from] = params
-      if (arg === 'down') {
-        scrollToPosition(1, sizes)
-      }
-      if (arg === 'up' && from > 0) {
-        scrollToPosition(-1, sizes)
-      }
+    try {
+      scrollToPosition(arg === 'down' ? 1 : -1, sizes)
     } catch (error) {
       console.log(error)
     }
@@ -105,22 +98,17 @@ const DirectionContainer = () => {
         <Col
           lg="3"
           md="4"
-          xs="10"
           sm="10"
+          xs="10"
           className="
-          
            small-categories-section
            d-flex
            flex-row
            flex-md-column
            align-items-center
-           justify-content-center 
-            ml-auto
-            mr-auto
            "
         >
-          <ControlButton isMobile={isMobile} onButtonClick={onButtonClick} direction="up" />
-
+          <ControlButton onButtonClick={onButtonClick} direction="up" />
           <div
             ref={smallCategoriesRef}
             className="
@@ -128,60 +116,64 @@ const DirectionContainer = () => {
               d-flex
               flex-row 
               flex-md-column 
-              p-0 m-0 
+             
               align-items-center"
           >
             {CategoriesText.map(({ title, imgSrc }) => (
               <SmallCategories key={title} title={title} imgSrc={imgSrc} />
             ))}
           </div>
-
-          <ControlButton isMobile={isMobile} onButtonClick={onButtonClick} direction="down" />
+          <ControlButton onButtonClick={onButtonClick} direction="down" />
         </Col>
         {/*left side scrollbar*/}
+        <Col className="picture-text-form">
+          <Row>
+            {/*picture and title section*/}
+            <Col
+              lg="6"
+              md="12"
+              xs="12"
+              sm="12"
+              className="d-flex flex-column text-center mt-5 mt-lg-0 picture"
+              style={{
+                fontSize: 30
+              }}
+            >
+              <span style={{ marginBottom: 20 }}>{data.title}</span>
+              <img
+                align="top"
+                style={{
+                  height: 400
+                }}
+                src={imageSource}
+              />
+            </Col>
 
-        {/*picture and title section*/}
-        <Col
-          lg="5"
-          md="8"
-          xs="12"
-          sm="12"
-          className="d-flex flex-column text-center"
-          style={{
-            fontSize: 40
-          }}
-        >
-          <span style={{ marginBottom: 20 }}>{data.title}</span>
-          <img
-            align="top"
-            style={{
-              height: 400
-            }}
-            src={imageSource}
-          />
-        </Col>
-        {/*picture and title section*/}
-        <Col lg="4" md="12" xs="12" sm="12">
-          <div style={{ marginTop: 20, marginBottom: 20 }}>
-            {data.points.map((point) => {
-              return <div key={point}>{point}</div>
-            })}
-          </div>
-          <div style={{ fontSize: 20 }}>{data.text}</div>
-          <div style={{ fontSize: 20, fontWeight: 'bold' }}>*{data.markup}</div>
-        </Col>
+            {/*picture and title section*/}
 
-        <Col
-          lg="6"
-          md="8"
-          xs="12"
-          sm="12"
-          className="ml-auto mr-md-auto mr-lg-0"
-          style={{
-            marginTop: 40
-          }}
-        >
-          <ContactForm handleSubmit={(e, user) => sendEmail(e, user, data.title, toastCallback)} />
+            <Col lg="6" md="12" xs="12" sm="12" className="text">
+              <div style={{ marginTop: 20, marginBottom: 20 }}>
+                {data.points.map((point) => {
+                  return <div key={point}>{point}</div>
+                })}
+              </div>
+              <div style={{ fontSize: 17 }}>{data.text}</div>
+              <div style={{ fontSize: 20, fontWeight: 'bold' }}>*{data.markup}</div>
+            </Col>
+
+            <Col
+              lg="6"
+              md="12"
+              xs="12"
+              sm="12"
+              className="ml-auto mr-md-auto mr-lg-0 mb-lg-5 sign-form"
+              style={{
+                marginTop: 40
+              }}
+            >
+              <ContactForm handleSubmit={(e, user) => sendEmail(e, user, data.title, toastCallback)} />
+            </Col>
+          </Row>
         </Col>
       </>
     )
