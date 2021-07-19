@@ -8,7 +8,7 @@ import {
 import { initMailClient } from './services/mail.js'
 import { AppContext } from './contexts'
 import { Header, BottomBar, MainSpinner, ToastContainer } from './components'
-import { About, Directions, MasterClass } from './pages'
+import { About, Directions, MasterClass, Contacts } from './pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/styles/style.scss'
@@ -77,6 +77,7 @@ const App = () => {
           <Route path="/about" component={About} />
           <Route path="/directions" component={Directions} />
           <Route path="/masterclass" component={MasterClass} />
+          <Route path="/contacts" component={Contacts} />
         </Switch>
         <BottomBar />
       </Router>

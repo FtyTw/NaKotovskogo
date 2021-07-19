@@ -1,0 +1,28 @@
+@import 'src/assets/styles/_colors.scss';
+
+.contacts {
+	min-height: 600px;
+
+	.icons {
+		display: flex;
+
+		span {
+			margin-top: 10px;
+			cursor: pointer;
+		}
+	}
+	.social {
+		height: 58px;
+		text-align: left;
+		display: flex;
+		font-size: 20px;
+		align-items: center;
+		text-decoration: underline;
+		cursor: pointer;
+		color: $base-green;
+	}
+	.google-frame {
+		min-width: 100%;
+		min-height: 500px;
+	}
+}
