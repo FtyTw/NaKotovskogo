@@ -27,6 +27,10 @@ const App = () => {
   const onClose = () => {
     setToast(false)
   }
+  const toggleSpinner = (val) => {
+    setIsReady(val)
+  }
+
   const overflowHandling = (val) => {
     const html = document.documentElement
     html.style.overflow = val ? 'visible' : 'hidden'
@@ -61,7 +65,7 @@ const App = () => {
   }, [isReady])
 
   return (
-    <AppContext.Provider style={{ backgroundColor: 'green' }} value={{ instaData, masterClasses, isReady, setToast }}>
+    <AppContext.Provider value={{ instaData, masterClasses, isReady, setToast, toggleSpinner }}>
       <MainSpinner hideSpinner={isReady} />
       <ToastContainer toast={toast} onClose={onClose} />
       <Router>

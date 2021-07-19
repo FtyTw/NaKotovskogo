@@ -6,9 +6,7 @@ import './MainSpinner.scss'
 const MainSpinner = ({ hideSpinner }) => {
   const size = window.innerWidth
   const [opacity, setOpacity] = useState(1)
-  const [intervalValue, setIntervalValue] = useState()
   const [degreesInterval, setDegreesInterval] = useState()
-  const [degrees, setDegrees] = useState(0)
   const spinnerRef = useRef()
   const rotateDiv = (deg) => {
     const div = spinnerRef.current
@@ -33,7 +31,7 @@ const MainSpinner = ({ hideSpinner }) => {
     }, 50)
   }
 
-  useEffect(() => {
+  const initiateScrolling = () => {
     let degrees = 0
     const interval = setInterval(() => {
       degrees = (degrees + 10) % 360
@@ -44,11 +42,14 @@ const MainSpinner = ({ hideSpinner }) => {
       }
     }, 10)
     setDegreesInterval(interval)
-  }, [])
+  }
 
   useEffect(() => {
     if (hideSpinner) {
       changeOpacity()
+    } else {
+      setOpacity(1)
+      initiateScrolling()
     }
   }, [hideSpinner])
 

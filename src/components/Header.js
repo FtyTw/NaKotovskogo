@@ -1,6 +1,7 @@
-import React, { useState, useRef, useLayoutEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect, useContext } from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
 import { Nav, Container, Row, Col, Image, Navbar } from 'react-bootstrap'
+import { AppContext } from '../contexts'
 import NavItem from './NavItem'
 import HeaderItems from '../constants/HeaderItems'
 import logo from '../assets/images/logo.jpg'
@@ -8,6 +9,7 @@ import './Header.scss'
 
 const Header = () => {
   const history = useHistory()
+  const { toggleSpinner } = useContext(AppContext)
   const [expanded, setExpanded] = useState(false)
 
   const navRef = useRef(null)
@@ -36,6 +38,12 @@ const Header = () => {
     e.stopPropagation()
     setExpanded(false)
     history.push('/about')
+  }
+  const onRedirectHandler = (route) => {
+    setExpanded(false)
+    toggleSpinner(false)
+    history.push(route)
+    setTimeout(() => toggleSpinner(true), 300)
   }
 
   useLayoutEffect(() => {
@@ -67,15 +75,7 @@ const Header = () => {
             <Navbar.Collapse id="basic-navbar-nav " className="justify-content-center">
               <Nav>
                 {HeaderItems.map(({ title, route }) => (
-                  <NavItem
-                    upper
-                    key={title}
-                    title={title}
-                    route={route}
-                    onRedirect={() => {
-                      setExpanded(false)
-                    }}
-                  />
+                  <NavItem upper key={title} title={title} route={route} onRedirect={onRedirectHandler} />
                 ))}
               </Nav>
             </Navbar.Collapse>

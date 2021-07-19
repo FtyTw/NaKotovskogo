@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react'
+import React, { useEffect, useState, useMemo, useContext, useRef } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import moment from 'moment'
 import { AppContext } from '../contexts'
@@ -42,7 +42,10 @@ const MasterClass = () => {
   const { masterClasses: mcData, isReady } = useContext(AppContext)
   const [masterClasses, setMasterClasses] = useState(null)
   const [allMasterClasses, setAllMasterClasses] = useState(null)
+  const [initScroll, setInitScroll] = useState(0)
+  const [timeoutId, setTimeoutId] = useState(null)
   const isMobile = useDeviceDimensions()
+  const daysScrollRef = useRef()
   const setCalendar = () => {
     const daysInMonth = []
     for (let i = 0; i < moment().daysInMonth(); i++) {
@@ -99,12 +102,48 @@ const MasterClass = () => {
       const closestMcs = Object.keys(mcsPrettified).find((dayNumber) => +dayNumber > today)
       if (closestMcs) {
         setMasterClasses(mcsPrettified[closestMcs])
+        scrollToClosest(closestMcs)
       }
     } catch (error) {
       console.log(error)
     }
   }
+  const scrollToClosest = (dayNumber) => {
+    if (dayNumber <= 2) {
+      setInitScroll(false)
+
+      return
+    }
+    const { children } = daysScrollRef.current
+    setTimeout(() => {
+      const { width, marginLeft, marginRight } = window.getComputedStyle(children[+dayNumber - 1])
+      const result = [width, marginLeft, marginRight].reduce((acc, value) => parseInt(value, 10) + acc, 0)
+      let scrollUntil = (dayNumber - 2) * result
+      const interval = setInterval(() => {
+        daysScrollRef.current.scrollLeft = daysScrollRef.current.scrollLeft + result
+        if (daysScrollRef.current.scrollLeft === scrollUntil) {
+          clearInterval(interval)
+          setInitScroll(result)
+        }
+      }, 20)
+    }, 500)
+  }
   const setMcsToOtherDay = (day) => allMasterClasses[day] && setMasterClasses(allMasterClasses[day])
+  const handleScroll = ({ target: { scrollLeft } }) => {
+    if (!isMobile) return
+    if (!initScroll) return
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+    const position = Math.round(scrollLeft / initScroll) + 1
+    const result = Object.keys(allMasterClasses).find((i) => Number(i) === position + 1)
+    if (!result) return
+    const timeout = setTimeout(() => {
+      setMcsToOtherDay(result)
+    }, 2000)
+    setTimeoutId(timeout)
+  }
+
   useEffect(() => {
     if (mcData?.length) {
       handleInstagramMedia(mcData)
@@ -113,7 +152,7 @@ const MasterClass = () => {
   }, [mcData])
 
   return (
-    <Container>
+    <Container className="mt-5 mb-0">
       <Row className="flex-column-reverse flex-md-column align-center">
         {isReady &&
           masterClasses &&
@@ -125,8 +164,11 @@ const MasterClass = () => {
             )
           })}
         <Col
+          onScroll={handleScroll}
           md="12"
-          className=" pb-3 pb-md-0 justify-content-md-center justify-content-start"
+          className="pl-0 pr-0 justify-content-md-center justify-content-start"
+          ref={daysScrollRef}
+          // pb-3 pb-md-0
           style={{
             //
             marginTop: 50,
@@ -142,7 +184,18 @@ const MasterClass = () => {
         >
           {masterClasses &&
             daysArray.map((i, index) => (
-              <EventDay isMobile={isMobile} key={index} day={i} hasEvent={allMasterClasses[i]} onClick={() => setMcsToOtherDay(i)} />
+              <EventDay
+                isMobile={isMobile}
+                key={index}
+                day={i}
+                hasEvent={allMasterClasses[i]}
+                onClick={() => {
+                  if (timeoutId) {
+                    clearTimeout(timeoutId)
+                  }
+                  setMcsToOtherDay(i)
+                }}
+              />
             ))}
         </Col>
       </Row>

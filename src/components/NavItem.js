@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 const NavItem = ({ title, route, upper = false, onRedirect }) => (
-  <Link onClick={onRedirect} className="nav-link art-nav-link " to={route}>
-    {upper ? title.toUpperCase() : title}
-  </Link>
+	<div onClick={() => onRedirect(route)} className="nav-link art-nav-link ">
+		{upper ? title.toUpperCase() : title}
+	</div>
 )
 
 export default NavItem

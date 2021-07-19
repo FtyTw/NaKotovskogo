@@ -2,6 +2,7 @@
 @import 'src/assets/styles/_fonts.scss';
 
 .about {
+	overflow: hidden;
 	& .about-us-main-text {
 		font-size: 4vh;
 		text-align: center;
