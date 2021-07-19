@@ -1,8 +1,8 @@
 const PicNames = [
-  'adultpainting1.heic',
+  'adult1.heic',
   'calligraphy2.heic',
   'handwriting2.jpg',
-  'adultpainting2.heic',
+  'adult2.heic',
   'clay1.heic',
   'botanical1.heic',
   'clay2.heic',

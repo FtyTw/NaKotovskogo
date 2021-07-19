@@ -12,7 +12,6 @@ export const useOnScroll = (callback) => {
 
 export const useOnBeforeUnload = (callback) => {
   useEffect(() => {
-    return
     window.addEventListener('beforeunload', callback)
 
     return window.removeEventListener('beforeunload', callback)
@@ -21,6 +20,7 @@ export const useOnBeforeUnload = (callback) => {
 
 export const useImageSource = (source) => {
   const [imgSrc, setImageSource] = useState()
+
   const sourceSetter = (imgSrc) => images.filter((i) => i.includes(`${imgSrc}2`))[0]
   useEffect(() => {
     if (source) {
