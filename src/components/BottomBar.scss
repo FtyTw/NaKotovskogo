@@ -1,0 +1,28 @@
+.footer {
+	padding-bottom: 20px;
+	background-color: #244f4e;
+	& .social-icons-section {
+		margin-top: 20px;
+		& .icons {
+			display: flex;
+		}
+
+		& .copyright {
+			color: rgba(255, 255, 255, 0.5);
+			margin-top: 5px;
+		}
+	}
+
+	& .contacts-section {
+		text-align: center;
+		margin-top: 20px;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	.google-map {
+		margin-top: 20px;
+		& .google-frame {
+			max-width: 100%;
+		}
+	}
+}

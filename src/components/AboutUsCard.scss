@@ -1,0 +1,13 @@
+.about-us-card {
+	transition: color 1s, opacity 1s;
+	transform: none;
+	opacity: 1;
+	color: #000;
+
+	font-weight: bold;
+	&:hover {
+		opacity: 0.7;
+		transition: color 1s, opacity 1s;
+		color: gray;
+	}
+}

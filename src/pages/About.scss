@@ -1,0 +1,71 @@
+@import 'src/assets/styles/_colors.scss';
+@import 'src/assets/styles/_fonts.scss';
+
+.about {
+	overflow: hidden;
+	& .about-us-main-text {
+		font-size: 4vh;
+		text-align: center;
+	}
+
+	& [class^='transition-component'] {
+		transition: padding-top 1s, opacity 2s;
+	}
+
+	& .carousel-row {
+		& .carousel {
+			max-width: 100%;
+			overflow-x: scroll;
+			overflow-y: hidden;
+		}
+	}
+
+	& .carousel-control-prev,
+	.carousel-control-next {
+		z-index: 3;
+		opacity: 1;
+	}
+
+	& .carousel-control-prev-icon,
+	.carousel-control-next-icon {
+		background-image: none;
+		&:after {
+			font-size: 55px;
+			color: $base-green;
+		}
+	}
+
+	& .carousel-control-next-icon:after {
+		content: '\276F';
+	}
+
+	& .carousel-control-prev-icon:after {
+		content: '\276E';
+	}
+
+	& .carousel-indicators li {
+		background-color: $base-green;
+		height: 5px;
+	}
+
+	& .animated-posts {
+		display: flex;
+		padding-top: 15px;
+		height: 400px;
+		justify-content: center;
+		align-items: center;
+		padding-bottom: 15px;
+		cursor: pointer;
+
+		&.hovered {
+			transform: none;
+			transition: transform 1s, z-index 1s;
+			z-index: 1;
+			&:hover {
+				transition: transform 1s, z-index 1s;
+				transform: scale(1.05);
+				z-index: 10000;
+			}
+		}
+	}
+}

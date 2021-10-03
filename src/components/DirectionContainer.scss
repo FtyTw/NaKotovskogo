@@ -1,0 +1,133 @@
+@import 'src/assets/styles/_colors.scss';
+
+.small-categories-section {
+	border: 3px solid $base-green;
+	border-radius: 30px;
+	display: flex;
+	justify-content: space-around;
+	height: 680px;
+	.small-categories-section-buttons {
+		z-index: 10000;
+		display: flex;
+
+		// flex: 1;
+		justify-content: center;
+		align-items: center;
+	}
+	.small-categories {
+		overflow: scroll;
+		&::-webkit-scrollbar {
+			width: 0px;
+			height: 0px;
+		}
+		.small-categories-section-link-container {
+			height: inherit;
+			width: inherit;
+
+			.small-categories-section-links {
+				box-sizing: border-box;
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center;
+				height: inherit;
+				width: inherit;
+				border: 3px solid $base-green;
+				border-radius: 10px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+				.title {
+					background-color: rgba(0, 0, 0, 0.1);
+					height: inherit;
+					width: inherit;
+					color: #fff;
+					text-transform: uppercase;
+					text-align: center;
+					color: #fff;
+					display: flex;
+					align-items: center;
+				}
+			}
+		}
+	}
+
+	@media only screen and (max-width: 320px) {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		justify-content: space-between;
+	}
+
+	@media only screen and (max-width: 768px) {
+		height: 300px;
+		.small-categories-section-buttons {
+			height: 20px;
+			width: 20px;
+			transform: rotate(270deg);
+		}
+		.small-categories {
+			height: 260px;
+			width: 200px;
+			max-width: 200px;
+		}
+	}
+
+	@media (min-width: 768px) {
+		height: 560px;
+		max-height: 560px;
+		.small-categories-section-buttons {
+			height: 40px;
+			min-height: 40px;
+			width: 40px;
+			transform: rotate(0deg);
+		}
+		.small-categories {
+			height: 480px;
+			min-height: 480px;
+			max-height: 480px;
+			width: 180px;
+			max-width: 180px;
+			.small-categories-section-link-container {
+				height: 235px;
+				margin-bottom: 10px;
+				cursor: pointer;
+			}
+		}
+	}
+}
+.picture-text-form {
+	@media (min-width: 768px) {
+		.picture,
+		.text {
+			height: 560px;
+			max-height: 560px;
+		}
+
+		.picture {
+			position: relative;
+			&:after {
+				position: absolute;
+				content: ' ';
+				width: 3px;
+				height: 80%;
+				background-color: $base-green;
+				right: -3px;
+				top: 10%;
+			}
+		}
+
+		.sign-form {
+			position: relative;
+
+			&:before {
+				position: absolute;
+				content: ' ';
+				width: 100%;
+				height: 3px;
+				background-color: $base-green;
+				// left: -50%;
+				top: -15%;
+			}
+		}
+	}
+}

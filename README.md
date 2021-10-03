@@ -1,2 +1,3 @@
-# NaKotovskogo
-The art studio web-page
+# Nakotovskogo
+
+Art gallery public page

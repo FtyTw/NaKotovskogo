@@ -1,0 +1,33 @@
+@import 'src/assets/styles/_colors.scss';
+
+.main-spinner {
+	background-color: #fff;
+	position: fixed;
+	z-index: 10002;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	& .main-spinner-container {
+		align-items: center;
+		justify-content: center;
+		display: flex;
+		position: relative;
+	}
+
+	& .main-spinner-circling-dots {
+		width: 60px;
+		height: 90%;
+		background-color: transparent;
+		position: absolute;
+		& .dots {
+			border-radius: 20px;
+			width: 60px;
+			height: 20px;
+			background-color: $base-green;
+			position: absolute;
+		}
+	}
+}
