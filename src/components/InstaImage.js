@@ -19,21 +19,39 @@ const InstaImage = ({ media_url, permalink, caption = '' }) => {
         window.open(permalink, '_blank')
       }}
     >
-      <Blurred url={media_url} />
-      <div className="caption">{realCaption}</div>
+      <Blurred url={media_url}></Blurred>
       <img src={media_url} />
-      <Icon
-        //
-        prefix="fab"
-        icon="instagram"
-        size={'5x'}
-        defaultColor="#C0C0C0"
-        className="instagram-image"
-        tintColor="#C0C0C0"
-        style={{
-          opacity: 1
-        }}
-      />
+      <div className="wrapper">
+        <Icon
+          //
+          prefix="fab"
+          icon="instagram"
+          size={'2x'}
+          defaultColor="#fff"
+          className="instagram-image"
+          tintColor="#C0C0C0"
+          style={{
+            opacity: 1
+          }}
+        />
+      </div>
+      <div className="caption">
+        <div>
+          <Icon
+            //
+            prefix="fab"
+            icon="instagram"
+            size={'5x'}
+            defaultColor="#fff"
+            className="instagram-image"
+            tintColor="#C0C0C0"
+            style={{
+              opacity: 1
+            }}
+          />
+        </div>
+        <div>{realCaption}</div>
+      </div>
     </div>
   )
 }
