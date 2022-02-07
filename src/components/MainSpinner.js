@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Image } from 'react-bootstrap'
-import logo from '../assets/images/logo.jpg'
+import logo from '../assets/images/logo.svg'
 import './MainSpinner.scss'
 
 const MainSpinner = ({ hideSpinner }) => {
