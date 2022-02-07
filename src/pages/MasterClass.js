@@ -39,13 +39,14 @@ const EventDay = ({ day, hasEvent, onClick, isMobile }) => {
 // #мастерклассодесса
 const MasterClass = () => {
   const [daysArray, setDaysArray] = useState([])
-  const { masterClasses: mcData, isReady } = useContext(AppContext)
+  const { masterClasses: mcData = false, isReady } = useContext(AppContext)
   const [masterClasses, setMasterClasses] = useState(null)
   const [allMasterClasses, setAllMasterClasses] = useState(null)
   const [initScroll, setInitScroll] = useState(0)
   const [timeoutId, setTimeoutId] = useState(null)
   const isMobile = useDeviceDimensions()
   const daysScrollRef = useRef()
+
   const setCalendar = () => {
     const daysInMonth = []
     for (let i = 0; i < moment().daysInMonth(); i++) {
@@ -53,6 +54,7 @@ const MasterClass = () => {
     }
     setDaysArray(daysInMonth)
   }
+
   const handleInstagramMedia = () => {
     try {
       const mcsPrettified = mcData.reduce((acc, item) => {
@@ -95,6 +97,7 @@ const MasterClass = () => {
             }
           : acc
       }, {})
+
       if (mcsPrettified) {
         setAllMasterClasses(mcsPrettified)
       }
@@ -109,21 +112,26 @@ const MasterClass = () => {
     }
   }
   const scrollToClosest = (dayNumber) => {
+    if (!isMobile) return
     if (dayNumber <= 2) {
       setInitScroll(false)
-
       return
     }
     const { children } = daysScrollRef.current
+
     setTimeout(() => {
       const { width, marginLeft, marginRight } = window.getComputedStyle(children[+dayNumber - 1])
       const result = [width, marginLeft, marginRight].reduce((acc, value) => parseInt(value, 10) + acc, 0)
-      let scrollUntil = (dayNumber - 2) * result
+      let scrollUntil = (dayNumber - 3) * result
       const interval = setInterval(() => {
-        daysScrollRef.current.scrollLeft = daysScrollRef.current.scrollLeft + result
-        if (daysScrollRef.current.scrollLeft === scrollUntil) {
+        try {
+          daysScrollRef.current.scrollLeft = daysScrollRef.current.scrollLeft + result
+          if (daysScrollRef.current.scrollLeft >= scrollUntil) {
+            clearInterval(interval)
+            setInitScroll(result)
+          }
+        } catch (error) {
           clearInterval(interval)
-          setInitScroll(result)
         }
       }, 20)
     }, 500)
